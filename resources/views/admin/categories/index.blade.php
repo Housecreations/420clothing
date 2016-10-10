@@ -39,7 +39,7 @@
     <thead>
         <th>Id</th>
         <th>Nombre</th>
-       <td>Genero</td>
+        <th>Genero</th>
         <th>Acción</th>
     </thead>
     <tbody>

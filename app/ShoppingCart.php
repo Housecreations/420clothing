@@ -57,9 +57,9 @@ class ShoppingCart extends Model
     }
     
     public function total(){
-        $price = 0;
+        $price = 0.00;
         foreach($this->articles as $articleDetail){
-            $price = $price + $articleDetail->article->price;
+            $price = $price + $articleDetail->article->price_now;
         }
         return $price;
        /* return $this->articles()->sum('price');*/

@@ -16,15 +16,14 @@
     
     
 	<!-- Google Fonts -->
-	<link href="http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700itali" rel="stylesheet">
-	<link href="http://fonts.googleapis.com/css?family=Raleway:400,900,800,700,500,200,100,600" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
 
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.css')}}">
-
+<link rel="stylesheet" href="{{ asset('css/flexslider.css')}}">
 <link rel="stylesheet" href="{{ asset('css/blue-scheme.css')}}">
 <link rel="stylesheet" href="{{ asset('css/animate.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
@@ -76,21 +75,27 @@
               footer
 =================================-->
 <!-- Socialize -->
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<ul class="social-icon wow fadeIn" data-wow-delay="0.3s">
-						<li><a href="#" class="fa fa-facebook"></a></li>
-						<li><a href="#" class="fa fa-twitter"></a></li>
-						<li><a href="#" class="fa fa-instagram"></a></li>
-					</ul>
-					<p class="wow bounceIn">Copyright 2016 &copy; <span>D'Sistemas Y PC, CA.</span> 
-                    | Desarrollado por: <a rel="nofollow" href="http://www.housecreations.com.ve" target="_blank"><span class="hc">House Creations</span></a></p>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<footer id="footer" class="relative">
+  
+    
+      <div class="">
+      
+       <ul class="social-icon">
+          <li><a href="http://www.facebook.com/420clothingmonagas" target="_blank" class="fa fa-facebook wow bounceIn" data-wow-delay="0.3s"></a></li>
+          <li><a href="http://www.twitter.com/Clothing420" target="_blank" class="fa fa-twitter wow bounceIn" data-wow-delay="0.6s"></a></li>
+
+          <li><a href="http://www.instagram.com/420_clothing" target="_blank" class="fa fa-instagram wow bounceIn" data-wow-delay="0.9s"></a></li>
+        
+         
+        </ul>
+      
+      
+       <div class="sub-copy">420Clothing &copy; 2016 | Desarrollado por <a href="http://www.housecreations.com.ve" rel="nofollow">House Creations</a></div>
+      </div>
+    
+ 
+
+</footer>
 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>

@@ -126,6 +126,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         $article->fill($request->all());
+        $article->price_now = $request->price - ($request->price * ($request->discount/100));
         $article->slug = null;
         $article->save();
         

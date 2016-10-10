@@ -5,7 +5,7 @@
 
 @section('content')
   
-    <div class="items-no-nav card col-md-10">
+    <div class="items-no-nav card col-md-10 col-sm-10 col-xs-10">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div><h4 class="text-center">Registro de usuario</h4></div>

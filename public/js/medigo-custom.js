@@ -44,11 +44,104 @@ $(window).load(function() { // makes sure the whole site is loaded
             }
         });
    
-
+});
     
     
     
 $(document).ready(function(){    
+    
+ 
+    
+    $('#color_select').change(function(){
+    
+    var $optionSelected = $(this).find("option:selected");
+  
+     var $color  = $optionSelected.text();
+    
+   
+    
+    
+   var $id = $('#article_id').val();
+      
+        var $baseUrl = document.location.origin;
+       
+         var $token = $('#token').val();
+        
+      $.ajax({
+            url: $baseUrl+'/sizes/',
+            headers: {'X-CSRF-TOKEN': $token},
+            method: "POST",
+            data: {article_id: $id, color: $color},
+            dataType:"JSON",
+            
+            success: function(data){
+              $('#size_select').empty();
+                $('.available').remove();
+                $('.agregar-carrito').fadeOut();
+                
+                $('#size_select').append('<option value=>Talla</option>');
+               $(data).each(function(key,value){
+       
+                   $('#size_select').append('<option value='+value.id+'>'+value.size+'</option>');
+           
+       });
+                
+            }
+            
+        });
+        
+
+});
+    
+    
+    $('#size_select').change(function(){
+    
+    var $optionSelected = $(this).find("option:selected");
+  
+     var $articleDetail_id  = $optionSelected.val();
+    
+   
+    
+ 
+
+      
+        var $baseUrl = document.location.origin;
+       
+         var $token1 = $('#token1').val();
+        
+      $.ajax({
+            url: $baseUrl+'/sizes/get',
+            headers: {'X-CSRF-TOKEN': $token1},
+            method: "POST",
+            data: {articleDetail_id: $articleDetail_id},
+            dataType:"JSON",
+            
+            success: function(data){
+             
+             
+              
+               $('.available').remove();
+                
+                if(data === 'Existencia'){
+                
+                    $('#Available').append("<span class='wow fadeIn available'> En Existencia </span>");
+                    $('.agregar-carrito').fadeIn();
+                    $('#inputDetail').val($articleDetail_id);
+                }
+                
+                if(data === 'Agotado'){
+                    $('#Available').append("<span class='wow fadeIn available'> Agotado </span>");
+                    $('.agregar-carrito').fadeOut();
+                }
+            }
+           
+       });
+                
+           
+        });
+        
+
+
     
     
     $(".form-discount").on("submit", function(ev){
@@ -240,7 +333,7 @@ $(document).ready(function(){
     
 });
     
-});
+
     
 $.fn.editable.defaults.mode = 'inline';
 $.fn.editable.defaults.ajaxOptions = {type: 'PUT'};

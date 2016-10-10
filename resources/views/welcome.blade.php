@@ -1,6 +1,6 @@
 @extends('admin.templates.principal')
 
-@section('title', "D'Sistemas y PC, CA.") 
+@section('title', "420 Clothing") 
 
 
 @section('content') 
@@ -30,6 +30,58 @@
       </div>
 
 
+<div class="container">
+    <hr>
+    <div class="col-md-6 col-sm-6 gentleman">
+      <a href="/articulos/Caballeros">
+       <img src="/images/front_images/{{$front_images->gentleman_image}}" alt="Imagen gentleman">
+       
+       <div class="box-overlay">
+           <div class="box-description">
+               <h1>Caballeros</h1>
+           </div>
+       </div>
+        </a>
+       
+    </div>
+
+        
+           <div class="col-md-6 col-sm-6 ladies">
+           <a href="/articulos/Damas">
+            <img src="/images/front_images/{{$front_images->ladies_image}}" alt="Imagen ladies">
+            
+                <div class="box-overlay">
+                   <div class="box-description">
+                       <h1>Damas</h1>
+                   </div>
+               </div>
+               </a>
+            </div>
+        
+        <div class="col-md-6 col-sm-6 acc">
+           <a href="/articulos/Accesorios">
+            <img src="/images/front_images/{{$front_images->acc_image}}" alt="Imagen acc">
+                <div class="box-overlay">
+                   <div class="box-description">
+                       <h1>Accesorios</h1>
+                   </div>
+               </div>
+        </div>
+    
+
+    
+    <div class="col-md-12 outlet">
+        <a href="/descuentos">
+        <img src="/images/front_images/{{$front_images->outlet_image}}" alt="Imagen outlet">
+        <div class="box-overlay">
+           <div class="box-description">
+               <h1>Outlet</h1>
+           </div>
+       </div>
+       </a> 
+    </div>
+    
+</div>
 
 
 @endsection

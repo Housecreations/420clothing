@@ -13,6 +13,9 @@
 
 /*Route::get('/eliminar/carritosvacios', 'ShoppingCartsController@eliminarcarritos');*/
 
+Route::post('/sizes', 'ArticleDetailsController@getSizes');
+Route::post('/sizes/get', 'ArticleDetailsController@sizesAction');
+
 Route::get('/tags/{tag}', function ($tag) {
    
     
@@ -108,7 +111,7 @@ Route::get('articulos/{gender}/{category}/{slug}', [ 'as' => 'mostrar.articulo',
     
     $tags = $article->tags;
   
-    $discount = $article->price + (($article->discount*$article->price)/100);
+   
     $relatedArticles = collect([]);
     
    
@@ -131,9 +134,14 @@ Route::get('articulos/{gender}/{category}/{slug}', [ 'as' => 'mostrar.articulo',
         $articles->push($relatedArticle[0]);
         
     }
+    
+    
+   /* $sizes = App\ArticleDetail::where('article_id', '=', $article->id)->where('color','=', 'dorado')->get();
+    dd(json_encode($sizes));*/
   
-   
-        return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'discount' => $discount]);
+   $colors = App\ArticleDetail::where('article_id', '=', $article->id)->groupBy('color')->get();
+    
+        return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'colors' => $colors]);
     
 }]);
 
@@ -224,8 +232,32 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     
     Route::resource('tags', 'TagsController');
     
+
+    Route::get('/articles/articleDetails/{id}', [
+    'uses' => 'ArticleDetailsController@index',
+    'as' => 'admin.articleDetails.index'
+    ]);
+    Route::get('/articles/articleDetails/{id}/create', [
+    'uses' => 'ArticleDetailsController@create',
+    'as' => 'admin.articleDetails.create'
+    ]);
     
-  
+    Route::post('/articles/articleDetails/{id}/create', [
+    'uses' => 'ArticleDetailsController@store',
+    'as' => 'admin.articleDetails.store'
+    ]);
+    Route::get('/articles/articleDetails/{id}/edit/{detail_id}', [
+    'uses' => 'ArticleDetailsController@edit',
+    'as' => 'admin.articleDetails.edit'
+    ]);
+    Route::put('/articles/articleDetails/{id}/edit/{detail_id}', [
+    'uses' => 'ArticleDetailsController@update',
+    'as' => 'admin.articleDetails.update'
+    ]);
+    Route::get('/articles/articleDetails/{detail_id}/destroy', [
+    'uses' => 'ArticleDetailsController@destroy',
+    'as' => 'admin.articleDetails.destroy'
+    ]);
       
     
     
@@ -269,7 +301,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     ]);
    
     
-  
+    Route::get('/front/images/{image}', [
+    'uses' => 'FrontController@editFrontImages',
+    'as' => 'admin.edit.front.images'
+    ]);
+    Route::put('/front/images/{image}', [
+    'uses' => 'FrontController@updateFrontImages',
+    'as' => 'admin.update.front.images'
+    ]);
     
     
     Route::get('/', ['as' => 'admin.index', function () {
@@ -280,7 +319,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         $totalMonthCount = App\Order::totalMonthCount();
         $orderCount = App\Order::orderCount();
         $orderCountAll = App\Order::orderCountAll();
-        
+        $front_images = App\FrontImage::find(1);
         if ($unread > 99) {
             
             $unread = '+99';
@@ -289,7 +328,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
       
         $carousel = App\CarouselImage::find(1);
         
-        return view('admin.index', ['unread' => $unread, 'carousel' => $carousel, 'totalMonth' => $totalMonth, 'totalMonthCount' => $totalMonthCount, 'orderCount' => $orderCount, 'orderCountAll' => $orderCountAll]);
+        return view('admin.index', ['unread' => $unread, 'carousel' => $carousel, 'totalMonth' => $totalMonth, 'totalMonthCount' => $totalMonthCount, 'orderCount' => $orderCount, 'orderCountAll' => $orderCountAll, 'front_images' => $front_images]);
     }]);
     
     Route::resource('users', 'UsersController');

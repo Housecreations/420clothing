@@ -60,14 +60,11 @@
 {!! Form::select('tags[]', $tags, $article->tags->lists('id')->ToArray(), ['class' => 'form-control select-tags', 'multiple','required']) !!}
 </div>
     
-     <div class="form-group">
-{!! Form::label('stock', 'Cantidad disponible') !!}
-{!! Form::number('stock', $article->stock, ['class' => 'form-control', 'required']) !!}
-</div>
+    
 
 <div class="form-group">
 {!! Form::label('price', 'Precio') !!}
-{!! Form::number('price', $article->price, ['class' => 'form-control', 'required']) !!}
+{!! Form::number('price', $article->price, ['class' => 'form-control', 'required', 'step' => '0.01']) !!}
 </div>
 
 <div class="form-group">

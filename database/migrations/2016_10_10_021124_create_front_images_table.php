@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCategoriesTable extends Migration
+class CreateFrontImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,22 +12,23 @@ class AddCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('front_images', function (Blueprint $table) {
             $table->increments('id');
-                
-             $table->string('name');
-            $table->enum('gender',['Caballeros','Damas', 'Accesorios']);
+            $table->string('gentleman_image');
+            $table->string('ladies_image');
+            $table->string('acc_image');
+            $table->string('outlet_image');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations 
+     * Reverse the migrations.
      *
      * @return void
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::drop('front_images');
     }
 }

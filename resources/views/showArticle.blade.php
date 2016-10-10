@@ -1,4 +1,4 @@
-@extends('admin.templates.productos')
+@extends('admin.templates.principal')
 
 @section('title', $article->name) 
 
@@ -36,7 +36,7 @@
   
    <div id="slider" class="flexslider">
                              @if($article->discount > 0)
-                    <div class="oferta-article">{{$discount}} Bs</div>
+                    <div class="oferta-article">{{$article->price}} Bs</div>
                     @endif
                               <ul class="slides">
                                 
@@ -76,15 +76,15 @@
       <span class="title">{{$article->name}}</span>
      </div>
       <div class="row up">
-      <div class="price">{{$article->price}} Bs </div>
+      <div class="price">{{$article->price_now}} Bs </div>
       
       
       
       
         @if(Auth::user())
-          @if($article->stock > 0 && Auth::user()->type == 'member')
+          @if(Auth::user()->type == 'member')
            
-                  <div class="agregar-carrito">
+                  <div class="agregar-carrito" style="display:none;">
                    
                   
                    
@@ -95,9 +95,9 @@
                
                 @endif
                 @else
-                 @if($article->stock > 0)
                 
-        <div class="agregar-carrito">
+                
+        <div class="agregar-carrito" style="display:none;">
                    
                   
                    
@@ -106,7 +106,7 @@
                    
                 </div>
                
-                @endif
+              
                 @endif
       
       
@@ -114,20 +114,40 @@
       
       
       </div>
-      <div class="row up">
+      <div class="row up" id="Available">
        
       <span class="bold-span"> Disponibilidad: </span>
      
-      @if($article->stock > 0)
-      
-      <span> En existencia</span>
-      @else
-      <span> Agotado</span>
-      
-      @endif
+   
        </div>
       
+     <div class="row">
+       <div class="form-group">
+    
+     <select class="form-control" required="required" id="color_select" name="color_select"><option selected="selected" value="">Color</option>
+   
+       @foreach($colors as $color)  
      
+             <option value="{{$color->id}}">{{$color->color}}</option> 
+               
+                @endforeach 
+            </select>
+    
+    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
+    
+    
+</div>
+      <div class="form-group">
+    
+    {!! Form::select('size', ['rojo' => ''], null, ['id'=>'size_select','class'=> 'form-control', 'placeholder' => 'Talla', 'required'] ) !!}
+    
+    {!! Form::number('article_id', $article->id, ['id'=>'article_id', 'class'=>'hidden']) !!}
+    <input type="hidden" name="_token" value="{{csrf_token()}}" id="token1">
+</div>
+     
+     
+     
+      </div>
       
           
           <div class="row">

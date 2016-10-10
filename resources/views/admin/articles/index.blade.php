@@ -96,19 +96,22 @@
                     
                         
                                 
+               <a href="{{ route('admin.articleDetails.index', $article->id)}}" title="Nuevo detalle de artículo" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
+                     <i class="fa fa-square fa-stack-2x"></i>
+  <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                    </span></a>
                
-               
-                <a href="{{ route('admin.articles.images', $article->id)}}" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
+                <a href="{{ route('admin.articles.images', $article->id)}}" title="Imágenes de artículo" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
                      <i class="fa fa-square fa-stack-2x"></i>
   <i class="fa fa-photo fa-stack-1x fa-inverse"></i>
                     </span></a>
                 
                 
-                <a href="{{ route('admin.articles.edit', $article->id)}}" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
+                <a href="{{ route('admin.articles.edit', $article->id)}}" title="Editar artículo" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
                      <i class="fa fa-square fa-stack-2x"></i>
   <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
                     </span></a>
-               <a href="{{ route('admin.articles.destroy', $article->id) }}" onclick="return confirm('Seguro que deseas eliminarlo?')" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
+               <a href="{{ route('admin.articles.destroy', $article->id) }}" title="Eliminar artículo" onclick="return confirm('Seguro que deseas eliminarlo?')" class=''><span class='fa-stack fa-lg ' aria-hidden='true'>
                      <i class="fa fa-square fa-stack-2x"></i>
   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                     </span></a>
@@ -117,6 +120,7 @@
             
             <img src="/images/articles/{{$article->images[0]->image_url}}" alt="">  
                <span>Precio: {{$article->price}}</span>
+               <span>Precio Descuento: {{$article->price_now}}</span>
                 <span>Unidades: {{$article->stock}}</span>
                 <span>% descuento: {{$article->discount}}</span>
                 <hr>

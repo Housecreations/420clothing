@@ -1,4 +1,4 @@
-@extends('admin.templates.productos')
+@extends('admin.templates.principal')
  @if(sizeof($articles)==0)
  @section('title', 'No se encontraron articulos') 
  @else
@@ -49,7 +49,7 @@
    
 		
         
-         <a href="{{ route('mostrar.articulo', [$article->category->slug, $article->slug])}}" >
+         <a href="{{ route('mostrar.articulo', [$article->category->gender,$article->category->slug, $article->slug])}}" >
    <div class="grid mask">
                     <div class="oferta">{{$article->discount}}% de descuento</div>
 						<figure>

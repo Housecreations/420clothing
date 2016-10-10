@@ -77,6 +77,32 @@
        </a> </div>
        </div>
        
+       <div class="row top-space admin">
+           
+           <div class="col-md-6 gentleman">
+              <a href="{{route('admin.edit.front.images', 'gentleman_image')}}">
+              <img src="/images/front_images/{{$front_images->gentleman_image}}" alt="">
+              </a> 
+           </div>
+           <div class="col-md-6 ladies">
+              <a href="{{route('admin.edit.front.images', 'ladies_image')}}">
+              <img src="/images/front_images/{{$front_images->ladies_image}}" alt="">
+              </a> 
+           </div>
+           <div class="col-md-6 acc">
+              <a href="{{route('admin.edit.front.images', 'acc_image')}}">
+              <img src="/images/front_images/{{$front_images->acc_image}}" alt="">
+              </a> 
+           </div>
+           <div class="col-md-12 outlet">
+               <a href="{{route('admin.edit.front.images', 'outlet_image')}}">
+              <img src="/images/front_images/{{$front_images->outlet_image}}" alt="">
+              </a> 
+           </div>
+           
+           
+       </div>
+       
        
         
         

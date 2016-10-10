@@ -23,7 +23,7 @@
     
 <div class="form-group">
     {!! Form::label('gender', 'Género') !!}
-    {!! Form::select('gender', ['male' => 'Masculino', 'female' => 'Femenino', 'acc'=>'Accesorio'], null, ['class'=> 'form-control', 'placeholder' => 'Seleccione un género', 'required'] ) !!}
+    {!! Form::select('gender', ['Caballeros' => 'Masculino', 'Damas' => 'Femenino', 'Accesorios'=>'Accesorio'], null, ['class'=> 'form-control', 'placeholder' => 'Seleccione un género', 'required'] ) !!}
     
 </div>
 

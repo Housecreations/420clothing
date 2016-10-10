@@ -60,7 +60,7 @@
 
 				<div class="col-md-12">
 
-					<div class="pull-left logo">
+					<div class="logo">
 						<a href="/">
 							<img src="{{asset('images/logo.png')}}" alt="Medigo by templatemo">
 						</a>
@@ -70,29 +70,53 @@
 
 						<nav class="main-nav visible-md visible-lg">
 							<ul class="sf-menu">
-								<li><a href="/">Inicio</a></li>
+							
 					          
-                                  
-                                    <li><a href="#">Productos</a>
+                                 
+                                    <li class="left-side"><a href="/articulos/Caballeros">Caballeros</a>
 					            	<ul>
                                         @foreach($categories as $category)
-					            		<li><a href="/articulos/{{$category->slug}}">{{$category->name}}</a></li>
-					            		
+                                        @if($category->gender == 'Caballeros')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
                                         @endforeach
-                                        <li><a href="/descuentos">Descuentos</a></li>
+                                      
 					            	</ul>
 					            </li>
+					            <li class="left-side"><a href="/articulos/Damas">Damas</a>
+					            	<ul>
+                                        @foreach($categories as $category)
+					            		@if($category->gender == 'Damas')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
+                                        @endforeach
+                                      
+					            	</ul>
+					            </li>
+					             <li class="left-side"><a href="/articulos/Accesorios">Accesorios</a>
+					            	<ul>
+                                        @foreach($categories as $category)
+					            		@if($category->gender == 'Accesorios')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
+					            		
+                                        @endforeach
+                                      
+					            	</ul>
+					            </li>
+                              
+                               
 					            
-					          
-					            <li><a href="{{ route('contact')}}">Contacto</a></li>
-                                
+					            <li class="right-side"><a href="{{ route('contact')}}">Tiendas</a></li>
+					            <li class="right-side"><a href="{{ route('contact')}}">Contacto</a></li>
+                               
                                 
                                 
                                 
                                 
                                  @if(Auth::user())
-                                 <li><a href="#">{{Auth::user()->name}}</a>
-					            	<ul>
+                                 <li class="right-side"><a href="#">{{Auth::user()->name}}</a>
+					            	<ul class="admin-dropdown">
 					            		@if(Auth::user()->type == 'admin')
 					            		<li><a href="{{ route('admin.index')}}">Panel de control</a></li>
 					            		@else
@@ -104,7 +128,7 @@
 					            </li>
                                 
                                 @else
-                                 <li><a href="{{route('admin.auth.login')}}">Iniciar sesión</a>
+                                 <li class="right-side"><a href="{{route('admin.auth.login')}}">Iniciar sesión</a>
                                  </li>
                                  
                                 @endif

@@ -1,6 +1,6 @@
 {!! Form::open(['url' => '/in_shopping_carts', 'method' => 'POST', 'id' => 'shopping_cart_form']) !!}
 
-<input type="hidden" name="articleDetail_id" value="{{$article->id}}">
+<input type="hidden" name="articleDetail_id" id="inputDetail" value="{{$article->id}}">
 
 {{--<input type="submit" class="cart-button" value="Agregar al carrito">--}}
 <button type="submit" class="add-to-cart-button">

@@ -1,4 +1,4 @@
-@extends('admin.templates.productos')
+@extends('admin.templates.principal')
 
 
 @section('title', 'Contáctanos')
@@ -60,9 +60,9 @@
     
       
       
-           <h4>D'Sistemas y PC, CA.</h4>
+           <h4>420 Clothing</h4>
            <span class="fa fa-phone"> 0424-765-43-21</span>
-           <span class="fa fa-envelope"> Contacto@Dsistemasypc.com</span>
+           <span class="fa fa-envelope"> Contacto@420clothing.com.ve</span>
            <span class="fa fa-map-marker"> Calle 1 cruce con calle 3 local 4 
            </span>
        

@@ -11,7 +11,7 @@ use App\Message;
 use App\Category;
 use Laracasts\Flash\Flash;
 use App\CarouselImage;
-
+use App\FrontImage;
 use App\Article;
 use App\Http\Requests\ImageRequest;
 
@@ -105,5 +105,37 @@ class FrontController extends Controller
         
         return back();
     
+    }
+    public function editFrontImages($image){
+        
+        $front = FrontImage::find(1);
+       
+     
+        return view('admin.front.editfrontimages', ['image' => $image, 'front' => $front]);
+    }
+    
+    public function updateFrontImages($image, Request $request){
+        
+       
+        if($request->file('image')){
+            
+                $file = $request->file('image');
+                $name = '420Clothing_' .$image. "." . $file->getClientOriginalExtension();
+                $path = public_path() . '/images/front_images/';
+                $file->move($path, $name);
+                
+                $front = FrontImage::find(1);
+                $front->$image = $name;
+                $front->save();
+                flash::success('Se actualizó la imagen');
+        
+                return redirect()->route('admin.index');
+              
+              
+             
+             
+             }
+        
+      return back();
     }
 }

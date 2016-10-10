@@ -55,7 +55,9 @@ class PaymentsController extends Controller
         foreach ($shoppingCart->articles as $articleDetail){
             
          
-            $articlesCount = $shoppingCart->articles()->where("articleDetail_id", "=", $articleDetail->id)->groupBy("articleDetail_id")->count(); //saber cuantos items son sin repetirse
+            $articlesCount = $shoppingCart->articles()->where("article_detail_id", "=", $articleDetail->id)->groupBy("article_detail_id")->count(); //saber cuantos items son sin repetirse
+          
+         
           
             if($articleDetail->stock >= $articlesCount){ //verificar que haya existencia
                 
@@ -64,10 +66,10 @@ class PaymentsController extends Controller
                         "currency_id" => "VEF",
                         "category_id" => $articleDetail->article->category->name,
                         "quantity" => 1],
-                    'unit_price', $articleDetail->article->price);
+                    'unit_price', $articleDetail->article->price_now);
 
                 array_push($items, $item);
-            
+           
             }else{
                 
                 
@@ -89,18 +91,20 @@ class PaymentsController extends Controller
             
         ]);
 
-       foreach ($shoppingCart->articles as $articleDetail{
+     foreach ($shoppingCart->articles as $articleDetail){
         
        $orderDetails = OrderDetails::create([
            
-            'order_id' => $order->id,
+           'order_id' => $order->id,
             'name' => $articleDetail->article->name,
-            'price' => $articleDetail->article->price
+            'price' => $articleDetail->article->price_now
             
-        ]);
-           }
         
-       
+       ]);
+           
+       }
+        
+      
         
         $order->approve();
         

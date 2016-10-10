@@ -35,19 +35,19 @@
     <select class="form-control" required="required" id="category_id" name="category_id"><option selected="selected" value="">Seleccione una categoria</option>
     <option value="">--Masculino--</option>
        @foreach($categories as $category)  
-         @if($category->gender == 'male') 
+         @if($category->gender == 'Caballeros') 
              <option value="{{$category->id}}">{{$category->name}}</option> 
                 @endif    
                 @endforeach 
             <option value="">--Femenino--</option>     
     @foreach($categories as $category)
-          @if($category->gender == 'female')
+          @if($category->gender == 'Damas')
             <option value="{{$category->id}}">{{$category->name}}</option>
                 @endif
                 @endforeach 
                  <option value="">--Accesorios--</option>  
                 @foreach($categories as $category)
-          @if($category->gender == 'acc')
+          @if($category->gender == 'Accesorios')
             <option value="{{$category->id}}">{{$category->name}}</option>
                 @endif
                 @endforeach </select>
