@@ -45,13 +45,17 @@
            
            </a>
            
-            <a href="{{url('/admin/orders/all')}}"><h5>Ver todas las órdenes</h5> 
+            <a class='' href="{{url('/admin/orders/all')}}"><h5>Ver todas las órdenes</h5> 
             
             @if($orderCountAll > 0)
             <span class="badge badge-color">{{$orderCountAll}}</span>
             @else
             <span class="badge">{{$orderCountAll}}</span>
             @endif
+            </a>
+            
+             <a href="{{url('/admin/payment')}}"><h5>Buscar un pago</h5> 
+        
             </a>
            
            </div>

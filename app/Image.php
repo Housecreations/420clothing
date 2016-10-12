@@ -20,6 +20,7 @@ class Image extends Model
         
         $image = Image::find($image_id);
         unlink(public_path()."\images\articles\\".$image->image_url);
+         /* unlink("/home/eselenas/public_html/images/articles/".$image->image_url); asi se elimina en hosting*/
         $image->delete();
         
         return Flash::success("Imagen eliminada");
@@ -30,7 +31,7 @@ class Image extends Model
         if($request->file('image')){
             
                     $file = $request->file('image');
-        $name = 'Dsistemas_' .time(). "." . $file->getClientOriginalExtension();
+        $name = '420clothing_' .time(). "." . $file->getClientOriginalExtension();
         $path = 'images/articles/';
         $file->move($path, $name);
                

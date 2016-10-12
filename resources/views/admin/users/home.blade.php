@@ -1,4 +1,4 @@
-@extends('admin.templates.productos')
+@extends('admin.templates.principal')
 
 @section('title', 'Panel de ' . Auth::user()->name) 
 
@@ -8,9 +8,15 @@
   
 
    <div class="items col-md-10 col-sm-10 col-xs-10 card">
+   <div class="col-md-12 col-sm-12 col-xs-12 user-nav">
+   <div class="col-md-6 col-sm-6 col-xs-6">
+   <h3>Mis compras</h3>
+   </div>
    
-   <h4>Mis compras</h4>
-   
+    <div class="col-md-6 col-sm-6 col-xs-6">
+    <a href="{{route('member.password.edit')}}" class="button button-lg float-right">Cambiar contraseña</a>
+   </div>
+   </div>
    
    @if(count($Orders) == 0)
    <hr>
@@ -22,14 +28,14 @@
    @foreach($Orders as $order)
    <hr>
    <div class="row">
-     <div class="col-md-6">
-       <h5>Estado: {{$order->status}}</h5>
+     <div class="col-md-6 col-sm-6 col-xs-10">
+       <h5 class="order-status {{$order->status}}">Estado: {{$order->status}}</h5>
        </div>
-      <div class="col-md-6 text-right">
-       <h5>Compra #{{$order->payment_id}}</h5><h5> Fecha: {{$order->created_at->format('d/m/Y')}}</h5>
+      <div class="col-md-6 col-sm-6 col-xs-10 text-right">
+       <h5>Pago #{{$order->payment_id}}</h5><h5> Fecha: {{$order->created_at->format('d/m/Y')}}</h5>
        </div>
    
-       <div class="col-md-6">
+       <div class="col-md-6 col-sm-6 col-xs-10">
        <table class='table'>
            <thead>
         <th>Artículo</th>
@@ -50,7 +56,7 @@
       </tbody>
        </table>
        </div>
-       <div class="col-md-6">
+       <div class="col-md-6 col-sm-6 col-xs-10">
            <h5 class="text-center">Información de envío</h5>
            <h5>Agencia de envío: {{$order->shipment_agency}}</h5>
            <h5>Identificador de agencia: {{$order->shipment_agency_id}}</h5>

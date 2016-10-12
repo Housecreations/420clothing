@@ -7,18 +7,44 @@
             <li><a href="/">Inicio</a></li>
           
            
-                                    <li><a href="#">Productos</a>
+                                    <li><a href="/articulos/Caballeros">Caballeros</a>
 					            	<ul>
                                         @foreach($categories as $category)
-					            		<li><a href="/articulos/{{$category->slug}}">{{$category->name}}</a></li>
-					            		
+                                        @if($category->gender == 'Caballeros')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
                                         @endforeach
-                                         <li><a href="/descuentos">Descuentos</a></li>
+                                      
 					            	</ul>
 					            </li>
 					            
-					             
+					            <li><a href="/articulos/Damas">Damas</a>
+					            	<ul>
+                                        @foreach($categories as $category)
+					            		@if($category->gender == 'Damas')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
+                                        @endforeach
+                                      
+					            	</ul>
+					            </li>
+					             <li><a href="/articulos/Accesorios">Accesorios</a>
+					            	<ul>
+                                        @foreach($categories as $category)
+					            		@if($category->gender == 'Accesorios')
+					            		<li><a href="/articulos/{{$category->gender}}/{{$category->slug}}">{{$category->name}}</a></li>
+					            		@endif
+					            		
+                                        @endforeach
+                                      
+					            	</ul>
+					            </li>
+                              
+                               
+					            
+					            <li><a href="{{ url('/tiendas')}}">Tiendas</a></li>
 					            <li><a href="{{ route('contact')}}">Contacto</a></li>
+					         
                                 
                                 
                                 
@@ -30,6 +56,7 @@
 					            	<ul>
 					            	@if(Auth::user()->type == 'admin')
 					            		<li><a href="{{ route('admin.index')}}">Panel de control</a></li>
+					            		<li><a href="{{ route('admin.password.edit')}}">Mi cuenta</a></li>
 					            		@else
 					            		<li><a href="{{ route('member.index')}}">Mi cuenta</a></li>
 					            		@endif
@@ -107,7 +134,7 @@
                               
                                
 					            
-					            <li class="right-side"><a href="{{ route('contact')}}">Tiendas</a></li>
+					            <li class="right-side"><a href="{{ url('/tiendas')}}">Tiendas</a></li>
 					            <li class="right-side"><a href="{{ route('contact')}}">Contacto</a></li>
                                
                                 
@@ -119,6 +146,7 @@
 					            	<ul class="admin-dropdown">
 					            		@if(Auth::user()->type == 'admin')
 					            		<li><a href="{{ route('admin.index')}}">Panel de control</a></li>
+					                   <li><a href="{{ route('admin.password.edit')}}">Mi cuenta</a></li>
 					            		@else
 					            		<li><a href="{{ route('member.index')}}">Mi cuenta</a></li>
 					            		@endif

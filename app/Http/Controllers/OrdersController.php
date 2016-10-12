@@ -21,15 +21,18 @@ class OrdersController extends Controller
     
     
     public function index(){
-        
-        $orders = Order::latest()->get();
+          
       
-        return view('orders.index', ['orders' => $orders]);
+        $orders = Order::latest()->orderBy('id', 'DESC')->paginate(5);
+      
+        return view('orders.month', ['orders' => $orders]);
     }
     
-    public function showAll(){
+    public function showAll(Request $request){
         
-        $orders = Order::all();
+      
+        
+        $orders = Order::search($request->name)->where('status', '!=', 'No pagada')->orderBy('id', 'DESC')->paginate(5);
       
         return view('orders.index', ['orders' => $orders]);
     }

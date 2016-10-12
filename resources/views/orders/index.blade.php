@@ -1,7 +1,7 @@
 @extends('admin.templates.principal')
 
 
-@section('title', 'Órdenes del mes')
+@section('title', 'Órdenes')
 
 
 @section('content')
@@ -18,7 +18,25 @@
   
          <div class="col-md-12">
            <div class="row">
-            <h4>Órdenes del mes</h4>
+            <h4>Órdenes</h4>
+            
+            
+            <!-- Buscador de usuarios -->
+<div>
+{!! Form::open(['route' => 'admin.orders.all', 'method' => 'GET', 'class' => 'navbar-form pull-right']) !!}
+    
+    <div class="input-group">
+    
+    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Buscar orden...', 'aria-describedby' => 'searchOrders']) !!}
+    
+    <span class="input-group-addon" id="searchOrders"><span class="glyphicon glyphicon-search"  aria-hidden="true"></span></span>
+    </div>
+</div>
+{!! Form::close() !!}
+<!-- Fin buscador de usuarios -->
+           <br>
+            
+            
             @foreach($orders as $order)
    <hr>
    <div class="row order-row">
@@ -87,6 +105,9 @@
    </div>
    
   @endforeach
+           <div class="text-center">
+    {!! $orders->render() !!}
+</div>
             <!--<table class="table table-hover">
                 <thead>
                     <tr>

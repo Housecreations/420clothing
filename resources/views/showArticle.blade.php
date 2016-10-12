@@ -203,7 +203,7 @@
      @foreach($relatedArticles as $article_related)
                                  
                                  <li>
-                                 <a href="{{url('/articulos/'.$article_related->category->slug.'/'.$article_related->slug)}}">
+                                 <a href="{{url('/articulos/'.$article_related->category->gender.'/'.$article_related->category->slug.'/'.$article_related->slug)}}">
                                  
                                  <span class="text-center related-title">{{$article_related->name}}</span>
                                   <img src="/images/articles/{{$article_related->images[0]->image_url}}" alt="Slide {{$article_related->id}}"/>

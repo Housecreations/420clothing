@@ -60,8 +60,8 @@ class FrontController extends Controller
              if($request->file('image')){
             
                 $file = $request->file('image');
-                $name = 'DSistemas_' .$id. "." . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/slider/';
+                $name = '420clothing_' .$id. "." . $file->getClientOriginalExtension();
+                $path = 'images/slider/';
                 $file->move($path, $name);
                 
                 $image = CarouselImage::find($id);
@@ -121,7 +121,7 @@ class FrontController extends Controller
             
                 $file = $request->file('image');
                 $name = '420Clothing_' .$image. "." . $file->getClientOriginalExtension();
-                $path = public_path() . '/images/front_images/';
+                $path = 'images/front_images/';
                 $file->move($path, $name);
                 
                 $front = FrontImage::find(1);

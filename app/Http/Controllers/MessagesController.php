@@ -55,7 +55,7 @@ class MessagesController extends Controller
             
             $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
                 'form_params' => [
-                'secret' => '6LdOQAcUAAAAADFQ350NWoZrJ7ihuDnX9LGHv9gQ',
+                'secret' => env('RE_CAP_SECRET'),
                 'response' => $token
                 ]
             ]);

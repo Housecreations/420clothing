@@ -16,7 +16,7 @@ class AddMessagesTable extends Migration
             $table->increments('id');
              $table->string('name');
              $table->string('email');
-            
+             $table->enum('has_store',['Sí','No'])->default('No');
             $table->string('subject');
             $table->string('message');
             $table->enum('read',['yes','no'])->default('no');

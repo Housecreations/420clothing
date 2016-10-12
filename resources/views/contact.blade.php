@@ -2,6 +2,9 @@
 
 
 @section('title', 'Contáctanos')
+@section('js-top')
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
 
 
 @section('content')
@@ -34,6 +37,14 @@
 <div class="form-group col-md-12 col-sm-12 col-xs-12">
 
 {!! Form::text('subject', null, ['class' => 'form-control', 'required', 'placeholder' => 'Asunto']) !!}
+</div>
+
+<div class="form-group col-md-12 col-sm-12 col-xs-12">
+
+
+
+{!! Form::select('has_store', ['Sí' => 'Sí', 'No' => 'No'],null, ['class' => 'form-control', 'placeholder' => '¿Posee tienda?', 'required']) !!}
+
 </div>
 
 <div class="form-group col-md-12 col-sm-12 col-xs-12">

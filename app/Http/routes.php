@@ -15,7 +15,7 @@
 
 Route::post('/sizes', 'ArticleDetailsController@getSizes');
 Route::post('/sizes/get', 'ArticleDetailsController@sizesAction');
-
+Route::get('/tiendas', 'StoresController@showStores');
 Route::get('/tags/{tag}', function ($tag) {
    
     
@@ -36,6 +36,16 @@ Route::get('/home', [
     'as' => 'member.index',
     'middleware' => 'members.auth'
 ]);
+Route::get('/home/passwords', [
+    'uses' => 'MembersController@editPassword',
+    'as' => 'member.password.edit',
+    'middleware' => 'members.auth'
+]);
+Route::put('/home/passwords', [
+    'uses' => 'MembersController@updatePassword',
+    'as' => 'member.password.update',
+    'middleware' => 'members.auth'
+]);
 
 
 Route::get('/carrito', 'ShoppingCartsController@index');
@@ -50,15 +60,14 @@ Route::resource('in_shopping_carts', 'InShoppingCartsController', [
 ]);
 
 
-
-
-
 Route::put('/payments/pay', 'PaymentsController@index');
 
 
 Route::get('/payments/fail', 'PaymentsController@fail');
 
 Route::get('/payments/success', 'PaymentsController@success');
+
+
 
 
 
@@ -85,7 +94,7 @@ Route::get('/articulos/{gender}', function ($gender) {
     
     $categoriesGender = App\Category::where('gender', '=', $gender)->get();
     
-    return view('showGender')->with('categoriesGender', $categoriesGender);
+    return view('showGender', ['categoriesGender' => $categoriesGender, 'gender' => $gender]);
 });
 
 
@@ -136,74 +145,13 @@ Route::get('articulos/{gender}/{category}/{slug}', [ 'as' => 'mostrar.articulo',
     }
     
     
-   /* $sizes = App\ArticleDetail::where('article_id', '=', $article->id)->where('color','=', 'dorado')->get();
-    dd(json_encode($sizes));*/
+   
   
    $colors = App\ArticleDetail::where('article_id', '=', $article->id)->groupBy('color')->get();
     
         return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'colors' => $colors]);
     
 }]);
-
-
-
-/*
-Route::get('/articulos/{category}', function ($cat) {
-     
-    
-    $articles = App\Category::where('slug', '=', $cat)->first()->articles()->where('visible', '=', 'yes')->orderBy('id', 'DESC')->get();
-
-    return view('show')->with('articles', $articles);
-});
-*/
-
-
-/*
-
-Route::get('articulos/{category}/{slug}', [ 'as' => 'mostrar.articulo', function ($cat, $slug) {
-    
-    $article = App\Article::where('slug', '=', $slug)->where('visible', '=', 'yes')->first();
-    
-    //si el articulo está oculto, muestra el error 404
-    if(!$article)
-    return abort(404);
-    
-    $tags = $article->tags;
-  
-    $discount = $article->price + (($article->discount*$article->price)/100);
-    $relatedArticles = collect([]);
-    
-   
-    foreach($tags as $tag){
-        
-    $relatedArticle = $tag->articles()->whereNotIn('article_id',[$article->id])->where('visible', '=', 'yes')->get();
-     
-   
-        $relatedArticles->push($relatedArticle);
-     
-        
-              
-    }
-   
-    $relatedArticles = $relatedArticles->collapse()->groupBy('id');
-    
-    $articles = collect([]);
-    foreach($relatedArticles as $relatedArticle){
-        
-        $articles->push($relatedArticle[0]);
-        
-    }
-  
-   
-        return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'discount' => $discount]);
-    
-}]);
-
-*/
-
-
-
-
 
 Route::get('/descuentos', function () {
    
@@ -219,11 +167,19 @@ route::get('/checkout',['uses'=>'PaymentsController@checkout','middleware' => 'm
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     
-    
+   
+    Route::get('/payment', 'PaymentsController@searchView');
+    Route::post('/payment', [
+    'uses' => 'PaymentsController@search',
+    'as' => 'admin.payments.search'
+    ]);
     
     Route::put('/orders/{id}', 'OrdersController@adminUpdate');
-    Route::get('/orders/all', 'OrdersController@showAll');
-    
+   /* Route::get('/orders/all', 'OrdersController@showAll');*/
+    Route::get('/orders/all', [
+    'uses' => 'OrdersController@showAll',
+    'as' => 'admin.orders.all'
+    ]);
     Route::resource('orders', 'OrdersController', [
     
     'only' => ['index']
@@ -232,6 +188,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     
     Route::resource('tags', 'TagsController');
     
+    Route::resource('stores', 'StoresController');
+    
+     Route::get('/stores/destroy/{id}', [
+    'uses' => 'StoresController@destroy',
+    'as' => 'admin.stores.destroy'
+    ]);
 
     Route::get('/articles/articleDetails/{id}', [
     'uses' => 'ArticleDetailsController@index',
@@ -308,6 +270,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::put('/front/images/{image}', [
     'uses' => 'FrontController@updateFrontImages',
     'as' => 'admin.update.front.images'
+    ]);
+    
+    Route::get('/password', [
+    'uses' => 'UsersController@editPassword',
+    'as' => 'admin.password.edit'
+    ]);
+     Route::put('/password', [
+    'uses' => 'UsersController@updatePassword',
+    'as' => 'admin.password.update'
     ]);
     
     

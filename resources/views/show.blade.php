@@ -34,51 +34,30 @@
        
      @foreach($articles as $article)
     
-    <div class="col-md-6 col-sm-6 col-xs-12 item-content">
+    <div class="portfolio-item col-sm-4 col-xs-6 bottom-space-md">
     
+         
         
-        
-        
-        
-        
-        
-        
-        
-    
-  
-        
-   
-			    	    
-         <a href="{{ route('mostrar.articulo', [$article->category->gender,$article->category->slug, $article->slug])}}" >
-   <div class="grid mask">
-                    @if($article->discount > 0)
+          <a href="{{  route('mostrar.articulo', [$article->category->gender,$article->category->slug, $article->slug])}}">
+                          @if($article->discount > 0)
                     <div class="oferta">{{$article->discount}}% de descuento</div>
                     @endif
-						<figure>
-							<img class="img-responsive" src="/images/articles/{{$article->images[0]->image_url}}" alt="">
-							<figcaption>
-								<h5>{{$article->name}}</h5>
-								
-							</figcaption><!-- /figcaption -->
-						</figure><!-- /figure -->
-			    	</div><!-- /grid-mask -->
+        
+                            <figure class="animate fadeInLeft">
+                                <div class="grid-image">
+                                    <div class="featured-info">
+                                        <div class="info-wrapper">{{$article->name}} <div class="price-wrapper">{{$article->price}} Bs</div></div>
+                                       
+                                        
+                                        
+                                    </div>
+                                    <img alt="image1" src="/images/articles/{{$article->images[0]->image_url}}">
+                                </div>
+                            </figure>
+                        </a>
+                   
+      
     
-        </a>
-        
-        
-        
-   
-    
-        
-        
-        
-        
-        
-    
-    
-    
- 
-   
     </div>
      
     @endforeach

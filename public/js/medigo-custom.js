@@ -68,7 +68,7 @@ $(document).ready(function(){
          var $token = $('#token').val();
         
       $.ajax({
-            url: $baseUrl+'/sizes/',
+            url: $baseUrl+'/sizes',
             headers: {'X-CSRF-TOKEN': $token},
             method: "POST",
             data: {article_id: $id, color: $color},

@@ -26,8 +26,10 @@
 @else
 <table class='table table-hover'>
    <thead>
+    <th>Nombre</th>
     <th>Correo</th>
     <th>Asunto</th>
+    <th>¿Posee tienda?</th>
     <th>Fecha</th>
     <th>Acciones</th>
 </thead>
@@ -44,9 +46,10 @@
 @endif
 
 
-
+<td>{{$message->name}}</td>
 <td>{{$message->email}}</td>
 <td>{{$message->subject}}</td>
+<td>{{$message->has_store}}</td>
 <td>{{$message->created_at->diffForHumans()}}</td>
 <td><a href="{{route('admin.messages.destroy', $message->id)}}" class="button">Eliminar</a></td>
 

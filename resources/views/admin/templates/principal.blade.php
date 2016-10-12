@@ -36,8 +36,9 @@
 		<script src="{{ asset('js/jquery-migrate-1.2.1.min.js') }}"></script> 
     <script src="{{ asset('js/bootstrap.js') }}"></script> 
    
-	
+		
 
+ @yield('js-top')
 </head>
 
 <body style="">
@@ -102,9 +103,8 @@
 <script src="{{ asset('js/min/plugins.min.js') }}"></script>
 <script src="{{ asset('js/medigo-custom.js') }}"></script>
 <script src="{{ asset('js/wow.min.js') }}"></script>
-    
-     
-   
+ <script src="{{ asset('js/modernizr.custom.js') }}"></script>   
+ 
     
     @yield('js')
     

@@ -16,7 +16,7 @@ class CategoriesController extends Controller
 {
    public function index(Request $request)
     {
-        $categoriesrender = Category::search($request->name)->orderBy('id', 'ASC')->paginate(5);
+        $categoriesrender = Category::search($request->name)->orderBy('id', 'DESC')->paginate(5);
         
         return view('admin.categories.index')->with('categoriesrender', $categoriesrender);
     }

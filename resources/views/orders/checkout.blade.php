@@ -14,7 +14,7 @@
 
 <hr>
 
-{{--@if($order->edited == 'no')--}}
+
 
 <div class="row">
 <div class="col-md-6">

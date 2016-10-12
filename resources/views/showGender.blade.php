@@ -2,7 +2,7 @@
  @if(sizeof($categoriesGender)==0)
  @section('title', 'No se encontraron categorías') 
  @else
-@section('title', $categoriesGender[0]->gender) 
+@section('title', $gender) 
 @endif
 
 
@@ -28,26 +28,37 @@
   <li><a href="/">Inicio</a></li>
 
     
-    <li class="active">{{$categoriesGender[0]->gender}}</li>
+    <li class="active">{{$gender}}</li>
   <hr>
 </ol>
        
      @foreach($categoriesGender as $category)
+    @if($category->articles()->count() > 0)
+    <div class="portfolio-item col-sm-4 col-xs-6 bottom-space-md">
     
-    <div class="col-md-6 col-sm-6 col-xs-12 item-content">
-    
         
+        <!--portfolio-item col-sm-4 col-xs-6 margin-bottom-40-->
         
-        
-        
-        
-        
+       
+      
+                        <a href="{{ url('/articulos/'.$category->gender.'/'.$category->slug)}}">
+                            <figure class="animate fadeInLeft">
+                                <div class="grid-image">
+                                    <div class="featured-info">
+                                        <div class="info-wrapper">{{$category->name}}</div>
+                                    </div>
+                                    <img alt="image1" src="/images/articles/{{$category->articles[0]->images[0]->image_url}}">
+                                </div>
+                            </figure>
+                        </a>
+                   
+       
         
         
     
   
         
-   
+   {{--
 			    	    
          <a href="{{ url('/articulos/'.$category->gender.'/'.$category->slug)}}" >
    <div class="grid mask">
@@ -63,7 +74,7 @@
     
         </a>
         
-        
+       --}} 
         
    
     
@@ -78,7 +89,7 @@
  
    
     </div>
-     
+     @endif
     @endforeach
   
   @endif

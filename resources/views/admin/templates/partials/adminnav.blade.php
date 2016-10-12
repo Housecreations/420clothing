@@ -25,7 +25,11 @@
 
 
     
-    
+ <div class="col-md-1 col-xs-3 admin-nav">
+<a href=" {{ route('admin.stores.index')}}">
+<h2>Tiendas</h2>
+</a>
+</div>   
 
 
    
