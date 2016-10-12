@@ -167,6 +167,36 @@ route::get('/checkout',['uses'=>'PaymentsController@checkout','middleware' => 'm
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     
+    Route::post('/config/status', [
+    'uses' => 'ConfigsController@changeStatus',
+    'as' => 'admin.config.status'
+    ]);
+    
+    
+    Route::get('/config', [
+    'uses' => 'ConfigsController@index',
+    'as' => 'admin.config.index'
+    ]);
+    Route::get('/config/shipment', [
+    'uses' => 'ShipmentsController@createShipment',
+    'as' => 'admin.shipment.create'
+    ]);
+    Route::post('/config/shipment', [
+    'uses' => 'ShipmentsController@storeShipment',
+    'as' => 'admin.shipment.store'
+    ]);
+    Route::get('/config/shipment/{id}', [
+    'uses' => 'ShipmentsController@editShipment',
+    'as' => 'admin.shipment.edit'
+    ]);
+    Route::put('/config/shipment/{id}', [
+    'uses' => 'ShipmentsController@updateShipment',
+    'as' => 'admin.shipment.update'
+    ]);
+    Route::get('/config/shipment/{id}/destroy', [
+    'uses' => 'ShipmentsController@destroyShipment',
+    'as' => 'admin.shipment.destroy'
+    ]);
    
     Route::get('/payment', 'PaymentsController@searchView');
     Route::post('/payment', [

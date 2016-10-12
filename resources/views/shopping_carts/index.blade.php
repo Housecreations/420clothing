@@ -85,8 +85,11 @@
 @if(Auth::user())
     
     @if(Auth::user()->type == 'member')
-    
+    @if($active->active == 'no')
+    <h3 class="text-center">Lo sentimos, los pagos están desactivados</h3>
+    @else
     <a href="{{url('/checkout')}}" class="cart-button">Ir al checkout</a>
+    @endif
     @endif
     
 @else

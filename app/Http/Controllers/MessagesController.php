@@ -78,8 +78,8 @@ class MessagesController extends Controller
                 Mail::send('emails.message', $data, function($messagee) use ($request)
                 {
                 //remitente
-                $messagee->from($request->email, $request->name);
- 
+               /* $messagee->from($request->email, $request->name);*/
+                $messagee->from('info@eselenasuarez.com', 'EsElenaSuarez.com');
                 //asunto
                 $messagee->subject($request->subject);
  

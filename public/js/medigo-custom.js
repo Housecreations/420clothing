@@ -288,6 +288,46 @@ $(document).ready(function(){
     
     
     
+    $("#store-status-form").on("submit", function(ev){
+       ev.preventDefault();
+        
+        var $form = $(this);
+        var $button = $form.find("[type='submit']");
+        
+        $.ajax({
+            url: $form.attr("action"),
+            method: $form.attr("method"),
+            data: $form.serialize(),
+            dataType:"JSON",
+            beforeSend: function(){ 
+                $button.html("<i class='fa fa-refresh fa-spin'></i>");
+
+            },
+            success: function(data){
+              
+                
+               
+                
+                setTimeout(function(){
+                    
+                    $button.html(data.texto).attr("class", data.clase);
+                },3000);
+                
+            },
+            error: function(err){
+                console.log(err);
+                $button.css("background-color", "#d50000").html("Hubo un error");
+                
+                
+            }
+        });
+        
+        return false;
+        
+    });
+    
+    
+    
       $("#shopping_cart_form").on("submit", function(ev){
        ev.preventDefault();
         

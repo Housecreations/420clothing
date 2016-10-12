@@ -40,7 +40,11 @@
 </div>
     
 
-
+<div class="col-md-1 col-xs-3 admin-nav">
+<a href=" {{ route('admin.config.index')}}">
+<h2>Configuración</h2>
+</a>
+</div>
 
     
     

@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 use Mail;
 use App\Mailer;
+use Vinkla\Hashids\Facades\Hashids;
+use App\Shipment;
+use App\Config;
 	
 use Illuminate\Support\Collection as Collection;
 
@@ -64,8 +67,8 @@ class PaymentsController extends Controller
    
     
     public function checkout(){
-        
-        return view('orders.checkout');
+       
+        return view('orders.checkout', ['shipments' => Shipment::all(), 'active' => Config::all()->first() ]);
         
     }
     
@@ -108,9 +111,9 @@ class PaymentsController extends Controller
          
           
             if($articleDetail->stock >= $articlesCount){ //verificar que haya existencia
-                
+              //  $articleDetail->article->name
                 $item = array_add([
-                        "title" => $articleDetail->article->name,
+                        "title" => 'Items del carrito',
                         "currency_id" => "VEF",
                         "category_id" => $articleDetail->article->category->name,
                         "quantity" => 1],

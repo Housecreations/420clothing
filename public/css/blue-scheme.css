@@ -1113,7 +1113,39 @@ select#size_select, select#color_select {
     opacity: 0.5;
 }
 
+button.button-on {
+    position: absolute;
+    right: 0px;
+    background-color: #31b531;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 14px;
+}
 
+button.button-on.button-off{
+    background-color: #c34022;
+}
+button.button-on.button-off:hover{
+    background-color: #e44d2a;
+}
+
+button.button-on:hover{
+    
+    background-color: #47c747;
+    transition: all 0.5s;
+    
+}
+
+.button-container a.button.button-lg {
+    /* margin: 1px; */
+    margin-right: px;
+    margin-left: 10px;
+}
+
+.button-container {
+    display: flex;
+}
 
 .button-sm{
     width: 30%;

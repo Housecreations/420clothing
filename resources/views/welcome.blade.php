@@ -66,7 +66,8 @@
                        <h1>Accesorios</h1>
                    </div>
                </div>
-        </div>
+            </a>
+               </div>
     
 
     

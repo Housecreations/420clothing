@@ -158,12 +158,12 @@ return [
         App\Providers\ComposerServiceProvider::class,
         App\Providers\ShoppingCartProvider::class,
         
-Collective\Html\HtmlServiceProvider::class,
-        
-Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
-        
-Laracasts\Flash\FlashServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
         JPBlancoDB\MercadoPago\MercadoPagoProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class,
+
 
     ],
 
@@ -210,12 +210,14 @@ Laracasts\Flash\FlashServiceProvider::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        
 
         
 'Form' => Collective\Html\FormFacade::class,
 'Html' => Collective\Html\HtmlFacade::class,
 'Flash' => Laracasts\Flash\Flash::class,
 'MercadoPago' => JPBlancoDB\MercadoPago\MercadoPago::class,
+'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
     ],
 
 ];

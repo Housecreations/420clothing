@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\ShoppingCart;
 use Illuminate\Support\Facades\Auth;
 use App\Article;
+use App\Config;
 
 class ShoppingCartsController extends Controller
 {   
@@ -50,7 +51,7 @@ class ShoppingCartsController extends Controller
             $articlesDetails = $shopping_cart->articles()->get();
                      
             $total = $shopping_cart->total();
-            return view('shopping_carts.index', ['articlesDetails' => $articlesDetails, 'total' => $total]);
+            return view('shopping_carts.index', ['articlesDetails' => $articlesDetails, 'total' => $total, 'active' => Config::all()->first()]);
             
            
        }else{

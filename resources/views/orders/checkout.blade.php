@@ -31,10 +31,10 @@
    <select class="form-control" required="required" id="shipment_agency" name="shipment_agency"><option selected="selected" value="">Seleccione una agencia</option>
   
       
-   
-                <option value="MRW">MRW</option> 
-                <option value="Zoom">Zoom</option>   
-              
+             @foreach($shipments as $shipment)
+                <option value="{{$shipment->name}}">{{$shipment->name}}</option> 
+               
+              @endforeach
            </select>
     
 </div>
@@ -80,11 +80,15 @@
     
 </div>
 <hr>
+@if($active->active == 'no')
+<h3 class="text-center bottom-space-md">Lo sentimos, los pagos están desactivados</h3>
+@else
 <div class="form-group">
     
     {!! Form::submit('Pagar', ['class' => 'cart-button'])!!}
     
 </div>
+@endif
 <a href="{{ url('/carrito')}}" class="button">Atrás</a>
 
 
