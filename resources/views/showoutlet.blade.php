@@ -8,7 +8,7 @@
 
 @section('content') 
    <div class="col-md-1"></div>
-    <div class="items col-md-10 col-sm-10 card"> 
+    <div class="items col-md-10 col-sm-10 col-xs-10 card"> 
    
       
     @if(sizeof($articles)==0)

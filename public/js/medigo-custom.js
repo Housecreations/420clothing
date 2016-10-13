@@ -202,7 +202,7 @@ $(document).ready(function(){
 
             },
             success: function(data){
-              
+              console.log(data);
                 $button.attr('style','');
                 
                 if(data.status === 'success'){

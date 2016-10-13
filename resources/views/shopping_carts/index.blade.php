@@ -1,4 +1,4 @@
-@extends('admin.templates.productos')
+@extends('admin.templates.principal')
 
 
 @section('title', 'Carrito de compras')

@@ -1256,7 +1256,7 @@ tbody.cart-tbody{
     border: solid 1px #e4e4e4;
 }
 tbody.cart-tbody td {
-    padding: 20px !important;
+    padding: 10px !important;
 }
 .cart-tbody a {
        background-color: #212121;
@@ -1484,6 +1484,12 @@ nav li {
     height: 150px;
     z-index: 200;
     position: fixed;
+}
+.col-md-4.stores {
+    border-right: solid 5px #909090;
+    border-radius: 0px 5px 5px 0px;
+   
+    margin-bottom: 10px;
 }
 .barraLateral{
     
@@ -3026,35 +3032,146 @@ width: 50%;
     .slideshow.index{
     height: 380px;
 }
+ 
+}
+@media (max-height: 640px) and (min-height: 480px) {
+    
+   .slideshow.index img {
+    height: 320px;
+}
+    .slideshow.index{
+    height: 320px;
+}
+     .logo{
+    right: -38.5%;
+}
+a.carrito{
+padding: 2px 40px;}
+a.carrito:hover{
+padding: 2px 50px;}
+#next1{
+top:37.5%;}
+#prev1{
+top:37.5%;}
+    .col-md-6.gentleman img {
+    height: 250px;
+}
+    .box-overlay {
+        opacity: 1;
+    }
+    
+    .featured-info{
+        opacity: 1 !important;
+    }.bottom-space-md {
+    padding-bottom: 0px;
+}.portfolio-item {
+    padding-left: 0px;
+    padding-right: 0px;
+}.portfolio-item figure img {
+   
+    height: 220px;
+    }.items{
+        padding-bottom: 50px;
+    }
+    #footer {
+   
+    font-size: 12px;
+    
+}
+    .breadcrumb {
+   margin-bottom: 0px;
+    font-size: 12px;
+}.flexslider .slides img {
+    height: 300px;
+}.oferta {
+    
+    right: 1.2%;
+    
+}#loader {
+   
+    left: 40%;
+    top: 30%;
   
+}.items-no-nav {
+   
+    margin-right: 2%;
+    margin-left: 2%;
+    width: 96%;
+   
+}input#image {
+    padding: 8px 0px;
+    margin-left: -40px;
+}.nav-admin {
+    width: 98%;
+    margin-left: 5px;
 }
-@media (max-height: 640px) and (min-height: 569px) {
+}
+@media (max-height: 731px) and (min-height: 641px) {/*667*/
     
    .slideshow.index img {
-    height: 430px;
+    height: 330px ;
 }
     .slideshow.index{
-    height: 430px;
+    height: 330px;
+}.logo{
+    right: -40%;
 }
+a.carrito{
+padding: 2px 40px;}
+a.carrito:hover{
+padding: 2px 50px;}
+#next1{
+top:35%;}
+#prev1{
+top:35%;}
+     .box-overlay {
+        opacity: 1;
+    } .col-md-6.gentleman img {
+    height: 250px;
 }
-@media (max-height: 667px) and (min-height: 641px) {
     
-   .slideshow.index img {
-    height: 470px;
-}
-    .slideshow.index{
-    height: 470px;
-}
-}
-@media (max-height: 736px)  and (min-height: 668px) {
+    .featured-info{
+        opacity: 1 !important;
+    }.bottom-space-md {
+    padding-bottom: 0px;
+}.portfolio-item {
+    padding-left: 0px;
+    padding-right: 0px;
+}.portfolio-item figure img {
+   
+    height: 240px;
+    }.items{
+        padding-bottom: 50px;
+    }.flexslider .slides img {
+    height: 300px;
+} .breadcrumb {
+   margin-bottom: 0px;
+    font-size: 14px;
+}.oferta {
     
-   .slideshow.index img {
-    height: 530px;
+    right: 1.2%;
+    
+}#loader {
+   
+    left: 40%;
+    top: 30%;
+  
+}.items-no-nav {
+   
+    margin-right: 2%;
+    margin-left: 2%;
+    width: 96%;
+   
+}input#image {
+    padding: 8px 0px;
+    margin-left: -40px;
+}.nav-admin {
+    width: 98%;
+    margin-left: 5px;
 }
-    .slideshow.index{
-    height: 530px;
+    
 }
-}
+
 @media (min-height: 1024px)  and (max-width: 768px) {
     
    .slideshow.index img {
@@ -3063,4 +3180,74 @@ width: 50%;
     .slideshow.index{
     height: 870px;
 }
+    
+
+}
+@media (max-height: 767px)  and (min-height: 732px) {
+    .logo{
+        right: -40%;
+    }
+    #next1{
+top:43%;}
+#prev1{
+    top:43%;}
+    .box-overlay {
+        opacity: 1;
+    } .col-md-6.gentleman img {
+    height: 250px;
+}
+      .slideshow.index img {
+    height: 330px ;
+}
+    .slideshow.index{
+    height: 330px;
+}#next1{
+top:32%;}
+#prev1{
+top:32%;} .featured-info{
+        opacity: 1 !important;
+    }.bottom-space-md {
+    padding-bottom: 0px;
+}.portfolio-item {
+    padding-left: 0px;
+    padding-right: 0px;
+}.portfolio-item figure img {
+   
+    height: 240px;
+}.items{
+        padding-bottom: 50px;
+    }.flexslider .slides img {
+    height: 300px;
+}.oferta {
+    
+    right: 1.2%;
+    
+}#loader {
+   
+    left: 40%;
+    top: 30%;
+  
+}.items-no-nav {
+   
+    margin-right: 2%;
+    margin-left: 2%;
+    width: 96%;
+   
+}input#image {
+    padding: 8px 0px;
+    margin-left: -40px;
+}.nav-admin {
+    width: 98%;
+    margin-left: 5px;
+}
+}
+@media (max-height: 800px) and (min-height: 768px) {
+    #next1{
+top:40%;}
+#prev1{
+top:40%;}.box-overlay {
+        opacity: 1;
+    } .featured-info{
+        opacity: 1 !important;
+    }
 }

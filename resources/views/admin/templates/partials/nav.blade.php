@@ -39,7 +39,7 @@
                                       
 					            	</ul>
 					            </li>
-                              
+                              <li><a href="{{ url('/descuentos')}}">Outlet</a></li>
                                
 					            
 					            <li><a href="{{ url('/tiendas')}}">Tiendas</a></li>

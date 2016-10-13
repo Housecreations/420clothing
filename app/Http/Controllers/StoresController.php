@@ -11,8 +11,8 @@ use Laracasts\Flash\Flash;
 class StoresController extends Controller
 {
     public function showStores(){
-        $stores = Store::groupBy('country')->get();
-        
+        $stores = Store::all();
+       
         return view('admin.stores.show', ['stores' => $stores]);
         
     }

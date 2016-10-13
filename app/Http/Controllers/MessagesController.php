@@ -62,17 +62,17 @@ class MessagesController extends Controller
            
             
             $result = json_decode($response->getBody()->getContents());
-             
+            
             if($result->success){
-                
+               
                 $message = new Message($request->all());
                 $message->message = $request->body;
                 $message->save();
         
                 $data = $request->all();
-        
+                 
+               
     
-        
  
                 //se envia el array y la vista lo recibe en llaves individuales {{ $email }} , {{ $subject }}...
                 Mail::send('emails.message', $data, function($messagee) use ($request)
@@ -88,7 +88,7 @@ class MessagesController extends Controller
  
                 });
         
-                return response()->json(['status' => 'success']);
+              return response()->json(['status' => 'success']);
          
             }else{
                 

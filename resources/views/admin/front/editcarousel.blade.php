@@ -25,7 +25,7 @@
 
 
 
-<div class="row">
+<div class="">
     
     
     
