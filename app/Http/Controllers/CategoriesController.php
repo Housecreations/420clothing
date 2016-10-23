@@ -82,6 +82,7 @@ class CategoriesController extends Controller
      
         $category = Category::find($id);
         $category->fill($request->all());
+        $category->slug = null;
         $category->save();
         
         Flash::success('La categoria se editó con éxito');
@@ -98,6 +99,17 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        
+        foreach($category->articles as $article){
+            
+            foreach($article->images as $image){
+                
+                 unlink(public_path()."\images\articles\\".$image->image_url);
+               /* unlink("/home2/dsistema/public_html/images/articles/".$image->image_url);*/
+            }
+            
+        }
+        
         $category->delete();
         
         Flash::error('La categoria ' . $category->name. ' ha sido eliminada');

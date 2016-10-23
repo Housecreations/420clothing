@@ -745,16 +745,21 @@ td.cart-header.to-appear {
     
 }
 .items-no-nav {
-      background: white;
+    background: white;
     margin-top: 120px;
     padding-top: 50px;
     padding-left: 2%;
-   /* padding-bottom: 150px;*/
+    /* padding-bottom: 150px; */
     padding-right: 2%;
-    margin-right: 10%;
-    margin-left: 10%;
-    width: 80%;
+    margin-right: 1%;
+    margin-left: 1%;
+    width: 98%;
     border-radius: 10px;
+}
+
+.payment-logo {
+    padding-top: 25px;
+    width: 20%;
 }
 
 .big-padding{
@@ -921,7 +926,7 @@ div#resetAlert {
 }
 
 .admin-item-content img {
-    height: 250px;
+    height: 150px;
         border: solid 2px #efedeb;
       
 }

@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 use Mail;
 use App\Mailer;
-use Vinkla\Hashids\Facades\Hashids;
+
 use App\Shipment;
 use App\Config;
+use App\PaymentsAccount;
+
+use Carbon\Carbon;
 	
 use Illuminate\Support\Collection as Collection;
 
@@ -26,25 +29,46 @@ class PaymentsController extends Controller
     
     public function search(Request $request){
         
-      
+       try{
+            $className = 'JPBlancoDB\MercadoPago\MercadoPago';
+        
+            if (!class_exists($className)) {
+                throw new \Exception('The class '.$className.' does not exist.');
+            }
+            
+            
         $paymentInfo = MercadoPago::get_payment($request->payment_id);
+        }catch(\Exception $err){
+            if($err->getCode() == '404'){
+                Flash::success('No hemos podido encontrar el pago');
+                return back();
+            }
+            return abort(500);
+            
+        }
+        
+        
+        if($paymentInfo['response']['collection']['status'] != 'approved'){
+ Flash::success('El pago no está aprobado');
+return back();
+}
+        
+        
         $order = Order::where('customid',$paymentInfo['response']['collection']['order_id'])->first();
      
         if($order){
             if($order->status == 'No pagada'){
                     $order->status = "Por procesar";
                     $order->received = "yes";
-                   
-                    $order->payment_type = $paymentInfo['response']['collection']['payment_type'];
                     $order->payment_id = $request->payment_id;
                     $order->save();
                     
                     //Email al usuario
-                    Mailer::sendMail("House Creations", "info@housecreations.com", "Orden en proceso de verificación", "Hemos recibido su pago #$order->payment_id para la orden #$order->customid. Su orden se encuentra en proceso de verificación", "emails.message", $order->shoppingCart->user->email, $order->shoppingCart->user->name);
+                    Mailer::processEmail($order);
         
-                    $base_url = url("/");
+                
                     //Email al administrador  
-                    Mailer::sendMail("House Creations", "info@housecreations.com", "Compra realizada", "Se ha realizado una compra, pago #$order->payment_id para la orden #$order->customid, puede revisar la orden en el siguiente link: $base_url/admin/orders", "emails.message", env("CONTACT_MAIL"), env("CONTACT_NAME"));
+                    Mailer::sendAdminEmail($order);
                     
                     Flash::success('Se ha encontrado el pago #'.$order->payment_id);
                     return redirect('admin/orders/all?name='.$order->payment_id);
@@ -68,28 +92,14 @@ class PaymentsController extends Controller
     
     public function checkout(){
        
-        return view('orders.checkout', ['shipments' => Shipment::all(), 'active' => Config::all()->first() ]);
+        return view('orders.checkout', ['shipments' => Shipment::all(), 'active' => Config::all()->first(), 'payments_accounts' => PaymentsAccount::all()]);
         
     }
     
     public function index(Request $request){
       
         
-   /*$filters = array (
-        "id" => null,
-        "site_id" => null,
-        "external_reference" => 4
-    );*/
-        /*$searchResult = MercadoPago::search_payment($filters);
-        dd($searchResult);*/
-        
-       
-/*$paymentInfo = MercadoPago::get_payment("2344613035");
- 
-
-       $a = MercadoPago::get_payment($paymentInfo['response']['collection']['id']);
-        dd($a);
-        */
+  
         
         
         //obtener carrito
@@ -102,7 +112,7 @@ class PaymentsController extends Controller
         
         //array con los items
         $items = [];
-        
+        $config = Config::find(1);
         foreach ($shoppingCart->articles as $articleDetail){
             
          
@@ -114,7 +124,7 @@ class PaymentsController extends Controller
               //  $articleDetail->article->name
                 $item = array_add([
                         "title" => 'Items del carrito',
-                        "currency_id" => "VEF",
+                        "currency_id" => $config->currency_code,
                         "category_id" => $articleDetail->article->category->name,
                         "quantity" => 1],
                     'unit_price', floatval($articleDetail->article->price_now));
@@ -177,8 +187,8 @@ class PaymentsController extends Controller
             "excluded_payment_methods" => array (),
             "excluded_payment_types" => array (
                 array ( "id" => "ticket" ),
-                
-               
+                array ( "id" => "atm" ),
+                array ( "id" => "debit_card" ),
                 array ( "id" => "prepaid_card" ),
             ),
             "installments" => 12
@@ -202,14 +212,141 @@ class PaymentsController extends Controller
       
       
         try {
+            
+              $className = 'JPBlancoDB\MercadoPago\MercadoPago';
+        
+            if (!class_exists($className)) {
+                throw new \Exception('The class '.$className.' does not exist.');
+            }
+          
+                
+                
             $preference = MercadoPago::create_preference($preference_data);
             return redirect()->to($preference['response']['init_point']);
-        } catch (Exception $e){
-            dd($e->getMessage());
+        
+        
+        } catch (\Exception $e){
+            $order->delete();
+             return abort(500);
         }
         
         
     }
+    
+    
+     public function pay_bank(Request $request){
+        
+        
+        
+        //obtener carrito
+        $shoppingCart = Auth::user()->shoppingCart;
+        
+        
+        if($shoppingCart->articles()->count() == 0){
+            Flash::success('No hay artículos en el carrito');
+            return back();
+        }
+        
+  
+      
+        $config = Config::find(1);
+         
+                foreach ($shoppingCart->articles as $articleDetail){
+            
+            $articlesCount = $shoppingCart->articles()->where("article_detail_id", "=", $articleDetail->id)->groupBy("article_detail_id")->count(); //saber cuantos items son sin repetirse
+          
+            if($articleDetail->stock >= $articlesCount){ 
+                
+            }else{
+                
+                
+                Flash::success('No hay suficiente disponibilidad del artículo '. $article->name);
+                return back();
+                
+            }
+        }
+   
+        
+        
+       
+        
+        $order = Order::create([
+           
+            'shopping_cart_id' => $shoppingCart->id,
+            'total' => $shoppingCart->total()
+            
+            
+        ]);
+   
+          foreach ($shoppingCart->articles as $articleDetail){
+        
+       $orderDetails = OrderDetails::create([
+           
+           'order_id' => $order->id,
+            'name' => $articleDetail->article->name,
+            'price' => $articleDetail->article->price_now
+            
+        
+       ]);
+           
+       }
+        
+       
+        
+   
+        
+    //orden
+        
+      
+        $order->shipment_agency = $request->shipment_agency;
+        $order->shipment_agency_id = $request->shipment_agency_id;
+        $order->recipient_name = $request->recipient_name;
+        $order->recipient_id = $request->recipient_id;
+        $order->recipient_email = $request->recipient_email;
+        $order->payment_type = $request->payment_type;
+       
+        $order->status = 'No pagada';
+        $order->received = "yes";
+        $order->save();
+        
+            //restar artículos vendidos
+            foreach($shoppingCart->articles as $articleDetail){
+                        
+                $articleDetail->stock = $articleDetail->stock - 1;
+                $articleDetail->save();
+                   
+                        
+                }
+                //vaciar carrito
+                $shoppingCart->articles()->detach();
+        
+        
+         Flash::success('La orden fue creada, cuando cargue el número identificador del pago su orden será procesada para envío');
+        return redirect('/home');
+        
+        
+        
+    }
+    
+      public function pay_bank_data(Request $request, $id){
+        
+        
+        $date = Carbon::createFromFormat('Y-m-d', $request->payment_date)->format('d/m/Y');
+        
+        $order = Order::find($id);
+        $order->payment_id = $request->payment_number;
+        $order->payment_date = $date;
+        $order->status = 'Por procesar';
+        $order->save();
+        
+        Mailer::processEmail($order);
+        Mailer::sendAdminEmail($order);
+        
+        Flash::success('Se han cargado los datos de su pago');
+        return back();
+        
+    }
+    
     
     public function fail(Request $request){
         
@@ -224,6 +361,37 @@ class PaymentsController extends Controller
         
         
     }
+    
+    
+    public function pending(Request $request){
+
+$paymentInfo = MercadoPago::get_payment($request->collection_id);
+
+
+
+if($paymentInfo['response']['collection']['status'] == 'rejected'){
+
+ Flash::success('El pago fue rechazado, por favor intente nuevamente');
+        
+  return redirect('/checkout');
+
+}elseif($paymentInfo['response']['collection']['status'] == 'in_process'){
+
+ Flash::success('Pago en proceso, envíe el número de pago al recibirlo');
+        
+  return redirect('/home');
+
+
+}else{
+
+ Flash::success('Pago pendiente, envíe el número de pago al recibirlo');
+        
+  return redirect('/home');
+
+}
+
+}
+    
      public function success(Request $request){
         
         
@@ -242,7 +410,6 @@ class PaymentsController extends Controller
                     
                     $order->status = 'Por procesar';
                     $order->received = "yes";
-                    $order->payment_type = $paymentInfo['response']['collection']['payment_type'];
                     $order->payment_id = $request->collection_id;
                     $order->save();
                     
@@ -264,12 +431,12 @@ class PaymentsController extends Controller
                     
                 
                     
-                    //Email al usuario
-                    Mailer::sendMail("House Creations", "info@housecreations.com", "Orden en proceso de verificación", "Hemos recibido su pago #$order->payment_id para la orden #$order->customid. Su orden se encuentra en proceso de verificación", "emails.message", $order->shoppingCart->user->email, $order->shoppingCart->user->name);
+                     //Email al usuario
+                    Mailer::processEmail($order);
         
-                    $base_url = url("/");
+                
                     //Email al administrador  
-                    Mailer::sendMail("House Creations", "info@housecreations.com", "Compra realizada", "Se ha realizado una compra, pago #$order->payment_id para la orden #$order->customid, puede revisar la orden en el siguiente link: $base_url/admin/orders", "emails.message", env("CONTACT_MAIL"), env("CONTACT_NAME"));
+                    Mailer::sendAdminEmail($order);
                     
                     
                     

@@ -7,13 +7,36 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Shipment;
 use App\Config;
+use App\ShoppingCart;
+use Laracasts\Flash\Flash;
+use App\PaymentsAccount;
+
 class ConfigsController extends Controller
 {
   public function index(){
       
-    return view('admin.config.index', ['shipments' => Shipment::orderBy('id', 'DESC')->get(), 'config' => Config::all()->first()]);  
+    return view('admin.config.index', ['shipments' => Shipment::orderBy('id', 'DESC')->get(), 'config' => Config::all()->first(), 'noUserCartsCount' => ShoppingCart::noUserCartsCount(), 'payments_accounts' => PaymentsAccount::all()]);  
       
   }
+    
+    
+    public function changeEmails(Request $request){
+        if($request->ajax()){
+        $config = Config::find(1);
+        $config->sender_email = $request->sender_email;
+        $config->sender_name = $request->sender_name;
+        $config->receiver_email = $request->receiver_email;
+        $config->save();
+        
+        return response()->json(['texto' => 'Correos actualizados']);
+        
+        }
+        Flash::success('Se han actualizado los correos');
+        return redirect()->route('admin.index');
+        
+    }
+    
+    
     
      public function changeStatus(Request $request)
     {   //ocultar o mostrar el artículo

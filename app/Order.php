@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\PaymentsAccount;
 
 class Order extends Model
 {
-   protected $fillable = ['shopping_cart_id', 'customid', 'shipment_agency', 'shipment_agency_id', 'recipient_name', 'recipient_id', 'recipient_email', 'payment_id', 'payment_type', 'edited', 'status', 'guide_number', 'total'];
+   protected $fillable = ['shopping_cart_id', 'customid', 'shipment_agency', 'shipment_agency_id', 'recipient_name', 'recipient_id', 'recipient_email', 'payment_id', 'payment_type', 'payment_date', 'edited', 'status', 'guide_number', 'total', 'received'];
     
     
     public function scopeSearch($query, $name){
@@ -14,6 +15,13 @@ class Order extends Model
     return $query->where('payment_id', 'LIKE', "%$name%");
     
 }
+    
+     public static function totalExpired(){
+        
+        return Order::where('status', '=', 'Vencida')->count();
+        
+    }
+    
     public static function totalMonth(){
         
         if(Order::monthly()->sum('total'))
@@ -48,7 +56,7 @@ class Order extends Model
     
     public function scopeMonthly($query){
          
-        return $query->where('status', '!=', 'No pagada')->whereMonth('created_at', '=', date('m'));
+        return $query->where('status', '!=', 'No pagada')->where('status', '!=', 'Vencida')->whereMonth('created_at', '=', date('m'));
     }
     
     
@@ -65,11 +73,7 @@ class Order extends Model
         $this->save();
         
     }
-    public function fail(){
-        
-        $this->updateCustomIDAndStatus('fail');
-        
-    }
+   
    
     public function generateCustomID(){
         
@@ -83,4 +87,9 @@ class Order extends Model
         return $this->hasMany('App\OrderDetails');
         
     } 
+    
+    public function findPaymentsAccount($id){
+        
+        return PaymentsAccount::find($id);
+    }
 }

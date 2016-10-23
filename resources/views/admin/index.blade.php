@@ -24,7 +24,7 @@
           
            
            <div class="col-md-6 sale-data">
-               <span>{{$totalMonth}} Bs</span>
+               <span>{{$totalMonth}} {{$currency}}</span>
                Ingresos del mes
            </div>
            <div class="col-md-6 sale-data">
@@ -70,8 +70,8 @@
            <hr>
         <div class="templatemo-gallery-item collection col-md-12 front">
         <a href="{{ route('admin.front.edit')}}">
-        @if($carousel)
-        <img src="images/slider/{{$carousel->image_url}}" alt="">
+        @if(sizeof($carousel) > 0)
+        <img src="images/slider/{{$carousel[0]->image_url}}" alt="">
         @else
         <img src="images/slider/" alt="">
         @endif

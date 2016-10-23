@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigsTable extends Migration
+class CreatePaymentsAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,18 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
+        Schema::create('payments_accounts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('bank_name');
+            $table->string('bank_account_number');
+            $table->string('bank_account_type');
+            $table->string('owner_name');
+            $table->string('owner_id');
+            $table->string('owner_email');
             $table->enum('active',['yes','no'])->default('yes');
-            $table->string('currency');
-            $table->string('currency_code');
-            $table->string('sender_email');
-            $table->string('sender_name');
-            $table->string('receiver_email');
+            
+            
             $table->timestamps();
         });
     }
@@ -32,6 +35,6 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('configs');
+        Schema::drop('payments_accounts');
     }
 }

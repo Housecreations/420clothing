@@ -13,6 +13,8 @@
 
 /*Route::get('/eliminar/carritosvacios', 'ShoppingCartsController@eliminarcarritos');*/
 
+Route::post('/deleteNoUserCarts', 'ShoppingCartsController@eliminarcarritos');
+
 Route::post('/sizes', 'ArticleDetailsController@getSizes');
 Route::post('/sizes/get', 'ArticleDetailsController@sizesAction');
 Route::get('/tiendas', 'StoresController@showStores');
@@ -23,8 +25,8 @@ Route::get('/tags/{tag}', function ($tag) {
 
    $tag = App\Tag::where('slug', '=', $tag)->first();
   
-  
-    return view('showtags', ['articles' => $articles, 'tag' => $tag]);
+  $currency = App\Config::find(1);
+    return view('showtags', ['articles' => $articles, 'tag' => $tag, 'currency' => $currency->currency]);
 });
 
 
@@ -60,11 +62,12 @@ Route::resource('in_shopping_carts', 'InShoppingCartsController', [
 ]);
 
 
-Route::put('/payments/pay', 'PaymentsController@index');
-
+Route::post('/payments/pay', 'PaymentsController@index');
+Route::post('/payments/pay_bank', 'PaymentsController@pay_bank');
+Route::post('/payments/pay_bank/data/{id}', 'PaymentsController@pay_bank_data');
 
 Route::get('/payments/fail', 'PaymentsController@fail');
-
+Route::get('/payments/pending', 'PaymentsController@pending');
 Route::get('/payments/success', 'PaymentsController@success');
 
 
@@ -105,8 +108,8 @@ Route::get('/articulos/{gender}/{category}', function ($gender, $cat) {
     $articles = App\Category::where('gender', '=', $gender)->where('slug', '=', $cat)->first()->articles()->where('visible', '=', 'yes')->orderBy('id', 'DESC')->get();
     
    
-
-    return view('show')->with('articles', $articles);
+ $currency = App\Config::find(1);
+     return view('show', ['articles' => $articles, 'currency' => $currency->currency]);
 });
 
 
@@ -144,21 +147,21 @@ Route::get('articulos/{gender}/{category}/{slug}', [ 'as' => 'mostrar.articulo',
         
     }
     
-    
+    $currency = App\Config::find(1);
    
   
    $colors = App\ArticleDetail::where('article_id', '=', $article->id)->groupBy('color')->get();
     
-        return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'colors' => $colors]);
+        return view('showArticle', ['article' => $article, 'relatedArticles' => $articles, 'colors' => $colors, 'currency' => $currency->currency]);
     
 }]);
 
 Route::get('/descuentos', function () {
    
     $articles = App\Article::where('ondiscount', '=', 'yes')->where('visible', '=', 'yes')->orderBy('id', 'DESC')->get();
+    $currency = App\Config::find(1);
   
-  
-    return view('showoutlet')->with('articles', $articles);
+     return view('showoutlet', ['articles' => $articles, 'currency' => $currency->currency]);
     
 });
 
@@ -167,9 +170,24 @@ route::get('/checkout',['uses'=>'PaymentsController@checkout','middleware' => 'm
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     
+    
+    Route::resource('payments_accounts', 'PaymentsAccountsController');
+    
+    Route::get('/payments_accounts/{id}/active', [
+    'uses' => 'PaymentsAccountsController@active',
+    'as' => 'admin.payments_accounts.active'
+    ]);
+    
+    
+    
     Route::post('/config/status', [
     'uses' => 'ConfigsController@changeStatus',
     'as' => 'admin.config.status'
+    ]);
+    
+    Route::post('/config/emails', [
+    'uses' => 'ConfigsController@changeEmails',
+    'as' => 'admin.config.emails'
     ]);
     
     
@@ -203,6 +221,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     'uses' => 'PaymentsController@search',
     'as' => 'admin.payments.search'
     ]);
+    
+    
+     Route::post('/orders/expired/delete', [
+    'uses' => 'OrdersController@expiredDelete',
+    'as' => 'admin.orders.expired.delete'
+    ]);
+    
     
     Route::put('/orders/{id}', 'OrdersController@adminUpdate');
    /* Route::get('/orders/all', 'OrdersController@showAll');*/
@@ -327,9 +352,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         }
         
       
-        $carousel = App\CarouselImage::find(1);
+        $carousel = App\CarouselImage::all();
+        $currency = App\Config::find(1);
         
-        return view('admin.index', ['unread' => $unread, 'carousel' => $carousel, 'totalMonth' => $totalMonth, 'totalMonthCount' => $totalMonthCount, 'orderCount' => $orderCount, 'orderCountAll' => $orderCountAll, 'front_images' => $front_images]);
+        return view('admin.index', ['unread' => $unread, 'carousel' => $carousel, 'totalMonth' => $totalMonth, 'totalMonthCount' => $totalMonthCount, 'orderCount' => $orderCount, 'orderCountAll' => $orderCountAll, 'front_images' => $front_images, 'currency' => $currency->currency]);
     }]);
     
     Route::resource('users', 'UsersController');

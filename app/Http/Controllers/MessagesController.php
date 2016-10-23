@@ -70,23 +70,8 @@ class MessagesController extends Controller
                 $message->save();
         
                 $data = $request->all();
-                 
-               
-    
- 
-                //se envia el array y la vista lo recibe en llaves individuales {{ $email }} , {{ $subject }}...
-                Mail::send('emails.message', $data, function($messagee) use ($request)
-                {
-                //remitente
-               /* $messagee->from($request->email, $request->name);*/
-                $messagee->from('info@eselenasuarez.com', 'EsElenaSuarez.com');
-                //asunto
-                $messagee->subject($request->subject);
- 
-                //receptor
-                $messagee->to(env('CONTACT_MAIL'), env('CONTACT_NAME'));
- 
-                });
+             
+                Mailer::sendMessageEmail($request, $data);
         
               return response()->json(['status' => 'success']);
          

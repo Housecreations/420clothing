@@ -46,7 +46,7 @@
                             <figure class="animate fadeInLeft">
                                 <div class="grid-image">
                                     <div class="featured-info">
-                                        <div class="info-wrapper">{{$article->name}} <div class="price-wrapper">{{$article->price}} Bs</div></div>
+                                        <div class="info-wrapper">{{$article->name}} <div class="price-wrapper">{{$article->price}} {{$currency}}</div></div>
                                        
                                         
                                         

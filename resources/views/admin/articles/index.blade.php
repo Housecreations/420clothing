@@ -121,10 +121,10 @@
             <img src="/images/articles/{{$article->images[0]->image_url}}" alt="">  
                <span>Precio: {{$article->price}}</span>
                <span>Precio Descuento: {{$article->price_now}}</span>
-                <span>Unidades: {{$article->stock}}</span>
-                <span>% descuento: {{$article->discount}}</span>
+               <br>
+                <span>Descuento: {{$article->discount}}%</span>
                 <hr>
-                 <span>{{$article->category->name}}</span>
+                 <span>{{$article->category->name}} - {{$article->category->gender}}</span>
                  <hr>
                   
                   @foreach($article->tags as $tag)

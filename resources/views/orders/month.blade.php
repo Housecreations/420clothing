@@ -14,6 +14,13 @@
         <div class="col-md-12  col-sm-12 col-xs-12 card">
           
         <a href="{{url('/admin')}}" class="button button-sm">Atrás</a>
+        
+         {!! Form::open(['route' => 'admin.orders.expired.delete', 'method' => 'POST', 'class' => 'navbar-form pull-right']) !!}
+        
+          <button type="submit" class="button">Eliminar órdenes vencidas: {{$totalExpired}}</button>
+        
+        {!! Form::close() !!}
+        
         <hr>
   
          <div class="col-md-12">

@@ -57,7 +57,7 @@ class Article extends Model implements SluggableInterface
         if($request->file('image')){
             
             $file = $request->file('image');
-            $name = 'Dsistemas_' .time(). "." . $file->getClientOriginalExtension();
+            $name = '420clothing_' .time(). "." . $file->getClientOriginalExtension();
             $path = 'images/articles/';
             $file->move($path, $name);
         

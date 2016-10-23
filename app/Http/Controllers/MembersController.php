@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
+use App\Config;
+use App\PaymentsAccount;
 
 class MembersController extends Controller
 {
@@ -17,9 +19,25 @@ class MembersController extends Controller
            
           
             
-            $Orders = Auth::user()->shoppingCart->orders()->orderBy('id', 'DESC')->get();
+          //ordenes vencidas
+           $orders = Auth::user()->shoppingCart->orders()->where('status', '=', 'No pagada')->get();
            
-           return view('admin.users.home', ['Orders' => $Orders]);
+          foreach($orders as $order){
+             
+              if($order->created_at->diffInDays() >= 3){
+                  
+                  $order->status = 'Vencida';
+                  $order->save();
+                  
+              }
+              
+          }
+           
+          $Orders = Auth::user()->shoppingCart->orders()->orderBy('id', 'DESC')->get();
+           
+           $currency = Config::find(1);
+           $payments_accounts = PaymentsAccount::all();
+           return view('admin.users.home', ['Orders' => $Orders, 'currency' => $currency->currency, 'payments_accounts' => $payments_accounts]);
            
        }else{
            
